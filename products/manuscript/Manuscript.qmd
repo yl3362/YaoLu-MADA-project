@@ -40,7 +40,7 @@ Here I plan to explore these documents.
 
 Here is the initial plan. First do ARIMA model to check the best time series model for the infection(may measured by death or symptom, haven't decided)
 
-Second, do regression for the relationship between the covid infection and vaccination. Maybe add some variables like population, age, gender, race.
+Second, do regression for the relationship between the covid infection and vaccination. Maybe add some other variables like population, age, gender, race. Plan to use county as individual observation. 
 
 {{< pagebreak >}}
 
