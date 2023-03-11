@@ -1,0 +1,80 @@
+---
+title: "An example cleaning script with code pulled in"
+author: "Yao Lu"
+date: "2023-03-11"
+output: html_document
+---
+
+
+# Processing script with code pulled in
+
+This is essentially the same as the other Quarto file, but now the code is not inside this file. Instead, it is pulled in from the R script using the code chunk labels.
+
+
+# Setup
+
+This needs to run to load the R script so we can include the code chunks below.
+
+Note that you can pull in more than one R script if you want.
+
+```{r, include=FALSE, cache=FALSE}
+knitr::read_chunk('processingcode1.R')
+```
+
+
+
+
+Load needed packages. Instead of having R commands here, this just pulls in the code from the R script we loaded above and labelled.
+
+
+```{r, packages, message = FALSE, warning = FALSE}
+```
+
+
+# Data loading
+
+Covid vaccination data comes from [here](https://experience.arcgis.com/experience/3d8eea39f5c1443db1743a4cb8948a9c).
+
+Covid symptom and death data comes from [here](https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip)
+
+```{r, loaddata}
+```
+
+# Explore data
+```{r, exploredata}
+```
+By head() of these two dataframe, we found that both cases and vacin have 161 obs. The first row in 'vacin' is GEORGIA. However, the first row in 'cases' is 'Appling'. Here I would like to combine these two dataset. So, later we can find that how much can vacin reduce the speed of COVID-19 spreading.
+
+# Cleaning
+We can find in both of these dataset, there is county_ID columns which should be identical. So, I'd like to combine these two dataset by county_ID. But they have different type. First we only get the numeric part of county_id in 'cases'.
+
+```{r,cleandata1}
+```
+
+By check both the heads and tails of two datasets. For 'vacin', I want to remove row 1 (ID=00000), since we don't need the entire Georgia information. I want to remove row 161(ID=99999), this is an unknown county which we don't need. For 'cases', I want to remove first 2 rows which are basicly unknown  
+
+```{r,cleandata2}
+```
+
+Then we check if all of these are matched.
+
+```{r,cleandata3}
+```
+
+It's ready to combine by 'county ID'.
+
+```{r,cleandata4}
+```
+
+Here we get a new dataset with 28 columns. I want to simplify that a little bit by removing the columns which are irrelevant with our research question.
+
+```{r,cleandata5}
+```
+
+Finally, 21 columns are left.
+
+# Save data 
+
+Then we save our data.
+```{r,savedata}
+```
