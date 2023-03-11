@@ -1,0 +1,85 @@
+---
+title: "An example exploratory analysis script"
+author: "Yao Lu"
+date: "03/11/2023"
+output: html_document
+---
+
+  
+  
+This Quarto file loads the cleaned data and does some exploring.
+
+
+
+# Setup
+
+
+
+
+
+Load the chunk so we can pull in R script
+
+```{r, include=FALSE, cache=FALSE}
+knitr::read_chunk('exploratory.R')
+```
+
+Load the packages
+```{r, packages, message = FALSE, warning = FALSE}
+```
+
+Load the data.
+```{r,loaddata}
+```
+
+
+# Data exploration through tables
+
+Showing a bit of code to produce and save a summary table.
+
+```{r,table}
+```
+
+# Data exploration through figures
+
+Histogram plots for the continuous outcomes. 
+
+'14 day case rate' first.
+
+```{r,figurey}
+```
+
+Here we find there are two county which have high '14 day case rate'. We want to know which they are.
+
+```{r,figurey1}
+```
+
+They are 'Quitman' and 'Stewart' counties. In the previous 14 days/100,000 population, Quitman has 392.33 cases reported, and Stewart has 1125.8 cases reported. Beyond our current research, we should pay attention about what situations make these two counties have such a high level than other counties. Previous 14 days before 01/31/2023.
+
+
+Now population, RTCUMVAXADMIN,PCTCUMPVAX,PCTCUMPCVAX and PCTBOOSTER. Since last four should be highly correlated. The analysis we will apply later should be same. 
+Our final model should include two predictors which are population and one of these four.
+
+Since the four choices share same statistics steps. We just pick population+PCTBOOSTER as example. I was thinking where could I find a categorical variables. Such as could I make population as 'small','medium' and 'large'. I think we can try both way how we define population. Since there is not other good choice of categorical variable I can find in this dataset. To make the diversity of our predictors. I decide to define population as categorical variables.(However,I am not saying this a better way.)
+
+Now 'PCTBOOSTER'.
+
+```{r,figurex5}
+```
+
+Now '14 day case rate' as function of 'PCTBOOSTER'.
+
+```{r,function1}
+```
+
+Here we find that two outliers make our plot hard to see clearly. We can try another model removing these two outliers. Here I just leave it here to see what our model shows.
+
+Once more cases as function of PCTBOOSTER, stratified by population. 
+
+```{r,function2}
+```
+
+
+# Notes
+
+Here we can see both the two outliers have small population.
+

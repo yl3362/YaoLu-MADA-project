@@ -71,7 +71,23 @@ Here we get a new dataset with 28 columns. I want to simplify that a little bit 
 ```{r,cleandata5}
 ```
 
-Finally, 21 columns are left.
+Finally, 21 columns are left. After thinking about exploring. Finally, I decide to set '14 day case rate' as my major outcome. Set 'population','RTCUMVAXADMIN','PCTCUMPVAX','PCTCUMPCVAX' and 'PCTBOOSTER' as the predictors.
+
+#Code book
+
+```{r,codebook}
+```
+
+Looks like the data source owner delete PCTCUMPBVAX from the data. However, haven't added 'PCTBOOSTER' to codebook. Here we assume they are same.
+
+After we have a look at explorary part. We need to switch 'PCTCUMPVAX','PCTCUMPCVAX' and 'PCTBOOSTER' to numeric.
+
+```{r,cleandata6}
+```
+
+Create a new categorical variables from population. 
+```{r,cleandata7}
+```
 
 # Save data 
 
