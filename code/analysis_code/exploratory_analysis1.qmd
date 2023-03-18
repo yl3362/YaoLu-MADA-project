@@ -14,9 +14,6 @@ This Quarto file loads the cleaned data and does some exploring.
 # Setup
 
 
-
-
-
 Load the chunk so we can pull in R script
 
 ```{r, include=FALSE, cache=FALSE}

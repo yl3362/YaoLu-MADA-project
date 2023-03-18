@@ -12,10 +12,6 @@ bibliography: ../dataanalysis_template_references.bib
 csl: ../apa.csl
 ---
 
-The structure below is one possible setup for a data analysis project (including the course project). For a manuscript, adjust as needed. 
-You don't need to have exactly these sections, but the content covering those sections should be addressed.
-
-This uses MS Word as output format. [See here](https://quarto.org/docs/output-formats/ms-word.html) for more information. You can switch to other formats, like html or pdf. See [the Quarto documentation](https://quarto.org/) for other formats.
 
 
 ```{r, echo=FALSE, message=FALSE}
@@ -29,18 +25,8 @@ library(knitr)
 # Summary/Abstract
 _Write a summary of your project._
 
-covid vaccination data comes from
-https://experience.arcgis.com/experience/3d8eea39f5c1443db1743a4cb8948a9c
-covid symptom and death data comes from
-https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip
 
-All the raw data are saved at raw_data
-
-Here I plan to explore these documents.
-
-Here is the initial plan. First do ARIMA model to check the best time series model for the infection(may measured by death or symptom, haven't decided)
-
-Second, do regression for the relationship between the covid infection and vaccination. Maybe add some other variables like population, age, gender, race. Plan to use county as individual observation. 
+Do regression for the relationship between the covid infection and vaccination. Maybe add some other variables like population, age, gender, race. Plan to use county as individual observation. 
 
 {{< pagebreak >}}
 
@@ -53,81 +39,23 @@ _The main data we use is the vaccination data and the data of the COVID cases in
 ## Description of data and data source
 _Firstly, we load data and see if there is the need of clean and transformation_
 
-```{r}
-library(readxl)
-library(readr)
-library(DataExplorer)
-library(dplyr)
-library(ggplot2)
-library(here)
+All data wrangling process are recorded in code/processing_code. 
 
-data_location <- here::here("data","raw_data","Georgia_DPH_PUBLIC_Vaccination_Public_Data_in_Excel.xlsx")
-vacin <- readxl::read_excel(data_location,sheet=2)
+covid vaccination data comes from
+https://experience.arcgis.com/experience/3d8eea39f5c1443db1743a4cb8948a9c
+covid symptom and death data comes from
+https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip
 
-data_location1 <- here::here("data","raw_data",'ga_covid_data',"county_cases.csv")
-
-cases <- read_csv(data_location1)
-
-#Both vacin and cases have some unknown,so we drop them
-vacin <- vacin %>% filter(COUNTY_ID!=99999)
-vacin <- vacin %>% filter(COUNTY_NAME!="GEORGIA")
-cases <- cases %>% filter(population!=0)
-
-temp <- vacin[44,]
-vacin[44,] <- vacin[43,]
-vacin[43,] <- temp
-
-combine <- cbind(vacin,cases)
-
-#There are many variables which we won't need. So we clean some of them
-combine1 <- combine %>% dplyr::select(COUNTY_NAME,PERSONVAX,PCTCUMPVAX, population, `14 day case rate`, `14 day cases`)
-#Prepare for the two plot, one is absolute plot(None vac person vs 14 absolute number)
-#the other is percentage plot (None vac percentage vs 14 day cases percentage)
-combine1$novac <- combine1$population-combine1$PERSONVAX
-combine1$PCTCUMPVAX <- as.numeric(combine1$PCTCUMPVAX)
-
-
-complement <- function (x) {
-  x <- 100-x
-}
-
-combine1$novacpct <- complement(combine1$PCTCUMPVAX)
-
-#this are subsituted by  complement function
-#for(i in 1:nrow(combine1)) {
-#  combine1$novacpct[i] <- 100-as.numeric(combine1$PCTCUMPVAX[i])
-#}
-
-per1000 <- function(x){
-  x <- x/1000
-}
-
-combine1$`14daycasepct` <- per1000(combine1$`14 day case rate`)
-
-#for(i in 1:nrow(combine1)) {
-#  combine1$`14daycasepct` <- combine1$`14 day case rate`[i]/1000
-#}
-
-#now we get the data we want
-#View(combine1)
-
-hist(combine1$`14daycasepct` )
-
-```
-
+All the raw data are saved at raw_data
 
 
 ## Questions/Hypotheses to be addressed
 
-
+Can booster decrease the speed of COVID spread?
 
 # Methods 
 
-
-
-
-## Data aquisition
-
+Start from linear regression. Then may try CV/bootstraping.
 
 
 ## Data import and cleaning
@@ -146,12 +74,86 @@ hist(combine1$`14daycasepct` )
 ## Exploratory/Descriptive analysis
 
 
+```{r, include=FALSE, cache=FALSE}
+knitr::read_chunk(here("code","analysis_code","exploratory.R"))
+```
+
+Load the packages
+```{r, packages, message = FALSE, warning = FALSE}
+```
+
+Load the data.
+```{r,loaddata}
+```
+
+### Data exploration through tables
+
+Showing a bit of code to produce and save a summary table.
+
+```{r,table}
+```
+
+### Data exploration through figures
+
+Histogram plots for the continuous outcomes. 
+
+'14 day case rate' first.
+
+```{r,figurey}
+```
+
+Here we find there are two county which have high '14 day case rate'. We want to know which they are.
+
+```{r,figurey1}
+```
+
+They are 'Quitman' and 'Stewart' counties. In the previous 14 days/100,000 population, Quitman has 392.33 cases reported, and Stewart has 1125.8 cases reported. Beyond our current research, we should pay attention about what situations make these two counties have such a high level than other counties. Previous 14 days before 01/31/2023.
 
 
+Now population, RTCUMVAXADMIN,PCTCUMPVAX,PCTCUMPCVAX and PCTBOOSTER. Since last four should be highly correlated. The analysis we will apply later should be same. 
+Our final model should include two predictors which are population and one of these four.
+
+Since the four choices share same statistics steps. We just pick population+PCTBOOSTER as example. I was thinking where could I find a categorical variables. Such as could I make population as 'small','medium' and 'large'. I think we can try both way how we define population. Since there is not other good choice of categorical variable I can find in this dataset. To make the diversity of our predictors. I decide to define population as categorical variables.(However,I am not saying this a better way.)
+
+Now 'PCTBOOSTER'.
+
+```{r,figurex5}
+```
+
+Now '14 day case rate' as function of 'PCTBOOSTER'.
+
+```{r,function1}
+```
+
+Here we find that two outliers make our plot hard to see clearly. We can try another model removing these two outliers. Here I just leave it here to see what our model shows.
+
+Once more cases as function of PCTBOOSTER, stratified by population. 
+
+```{r,function2}
+```
+
+
+### Notes
+
+Here we can see both the two outliers have small population.
 
 ## Basic statistical analysis
 
+```{r, include=FALSE, cache=FALSE}
+knitr::read_chunk(here("products","manuscript","Manuscript.R"))
+```
 
+Load the packages
+```{r, packages, message = FALSE, warning = FALSE}
+```
+
+Load the data.
+```{r,loaddata}
+```
+
+Linear regression
+```{r,lm}
+```
 
 ## Full analysis
 
