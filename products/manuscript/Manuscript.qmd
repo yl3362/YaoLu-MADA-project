@@ -79,18 +79,18 @@ knitr::read_chunk(here("code","analysis_code","exploratory.R"))
 ```
 
 Load the packages
-```{r, packages, message = FALSE, warning = FALSE}
+```{r, packages, message = FALSE, warning = FALSE,echo=FALSE}
 ```
 
 Load the data.
-```{r,loaddata}
+```{r,loaddata,echo=FALSE, message=FALSE}
 ```
 
 ### Data exploration through tables
 
-Showing a bit of code to produce and save a summary table.
+Vaccine-related tables
 
-```{r,table}
+```{r,table,echo=FALSE, message=FALSE}
 ```
 
 ### Data exploration through figures
@@ -99,12 +99,12 @@ Histogram plots for the continuous outcomes.
 
 '14 day case rate' first.
 
-```{r,figurey}
+```{r,figurey,echo=FALSE, message=FALSE}
 ```
 
 Here we find there are two county which have high '14 day case rate'. We want to know which they are.
 
-```{r,figurey1}
+```{r,figurey1,echo=FALSE, message=FALSE}
 ```
 
 They are 'Quitman' and 'Stewart' counties. In the previous 14 days/100,000 population, Quitman has 392.33 cases reported, and Stewart has 1125.8 cases reported. Beyond our current research, we should pay attention about what situations make these two counties have such a high level than other counties. Previous 14 days before 01/31/2023.
@@ -117,19 +117,19 @@ Since the four choices share same statistics steps. We just pick population+PCTB
 
 Now 'PCTBOOSTER'.
 
-```{r,figurex5}
+```{r,figurex5,echo=FALSE, message=FALSE}
 ```
 
 Now '14 day case rate' as function of 'PCTBOOSTER'.
 
-```{r,function1}
+```{r,function1,echo=FALSE, message=FALSE}
 ```
 
 Here we find that two outliers make our plot hard to see clearly. We can try another model removing these two outliers. Here I just leave it here to see what our model shows.
 
 Once more cases as function of PCTBOOSTER, stratified by population. 
 
-```{r,function2}
+```{r,function2,echo=FALSE, message=FALSE}
 ```
 
 
@@ -144,16 +144,41 @@ knitr::read_chunk(here("products","manuscript","Manuscript.R"))
 ```
 
 Load the packages
-```{r, packages, message = FALSE, warning = FALSE}
+```{r, packages, message = FALSE, warning = FALSE,echo=FALSE}
 ```
 
 Load the data.
-```{r,loaddata}
+```{r,loaddata,echo=FALSE, message=FALSE}
 ```
 
 Linear regression
-```{r,lm}
+```{r,lm,echo=FALSE, message=FALSE}
 ```
+
+These are the result from simple linear regression.
+
+However, we would like to do linear regression with one predictor each time to explore the most significant ones. Since we haven't find any significant even with the most possible significants ones.(fully vaccine and booster) So, we should expect we will have many diffculties. Here I will explore all variable in our data sets.
+
+```{r,lm1,echo=FALSE, message=FALSE}
+```
+
+From one to one regression, only 'case rate' have a significant p-value. And all vaccine relevant predictors are irrelevant to "14 day case rate". From here, I will adjust my predictors from vaccine-related to "case rate".
+
+And population1 is a categorical variable, so the single p-value is not enough to decide if should include it or not. So, we do anova F-test manually.
+
+```{r,anova,echo=FALSE, message=FALSE}
+```
+Unfortunately, it is also insignificant. So, we should remove it in real data analysis. But here since I want to keep my predictors' diversity. So, I assume it is significant.
+
+```{r,lm2,echo=FALSE, message=FALSE}
+```
+Surprisingly, when we adjusted 'case rate' in our model, categorical population shows a little bit significance. Here is our initial conclusion. Vaccine cannot decrease the speed of COVID confirmed cases in 14 days. Since not all people who get infected will have test, there is bias. Here are the possible guess I made. Worst one, vaccine cannot prevent COVID. Neutral one, vaccine can smooth the symptom, but cannot reduce infection. Optimistic one, vaccine can smooth the symptom, but virus shows immune escape. The county who had experienced a high rate infection still keep a high '14 day case rate', because the type of virus in that county escape the vaccine protection.
+
+As the 'case rate' increase one unit, the '14 day case rate' will increase 0.008894 unit. That is, if cumulative number of cases per 100,000 population increase one. Cases reported in the previous 14 days per 100,000 population will increase 0.008894. (t-value=7.836,p-value<0.001).
+
+And the county with less population have higher '14 day case rate'. The initial guess is that, for the county with high population, people have already had herd immunity at the early stage of COVID. So, in 01/31/2023, the county with less population have higher '14 day case rate'. 
+
+
 
 ## Full analysis
 
