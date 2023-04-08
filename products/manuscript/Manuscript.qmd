@@ -1,5 +1,5 @@
 ---
-title: "Covid-19 death and vaccination base on time series data"
+title: "Covid-19 spread speed and vaccination"
 subtitle: ""
 author: Yao Lu
 date: "`r Sys.Date()`"
@@ -14,7 +14,7 @@ csl: ../apa.csl
 
 
 
-```{r, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE,warning = FALSE}
 # load a few R packages
 library(here)
 library(knitr)
@@ -24,7 +24,7 @@ library(knitr)
 
 # Summary/Abstract
 _Write a summary of your project._
-
+This paper [@Chenchula2022-lu] discuss the effectiveness of vaccine to Omicron variant.
 
 Do regression for the relationship between the covid infection and vaccination. Maybe add some other variables like population, age, gender, race. Plan to use county as individual observation. 
 
@@ -78,11 +78,10 @@ Start from linear regression. Then may try CV/bootstraping.
 knitr::read_chunk(here("code","analysis_code","exploratory.R"))
 ```
 
-Load the packages
+
 ```{r, packages, message = FALSE, warning = FALSE,echo=FALSE}
 ```
 
-Load the data.
 ```{r,loaddata,echo=FALSE, message=FALSE}
 ```
 
@@ -181,10 +180,61 @@ And the county with less population have higher '14 day case rate'. The initial 
 
 
 ## Full analysis
+```{r, include=FALSE, cache=FALSE}
+knitr::read_chunk(here("products","manuscript","machinelearning.R"))
+```
 
+Here we will use machine learning method to analysis this data. We seperate our data for train and test strata by '14 day case rate' which is our major interest outcome.
+
+
+
+```{r,load1,echo=FALSE, message=FALSE}
+```
+
+Then we check the performance of null model. If we just use mean, what is the rmse. Here we get if we use null model. Our rmse is 87.5.
+
+```{r,Null,echo=FALSE, message=FALSE}
+```
+
+Then we setup three models to compare the performance of these models. The intermediate is hided. We will show important outcome which guide us to make further decision.
+
+```{r,spec,echo=FALSE, message=FALSE,results=FALSE}
+```
+
+```{r,wf,echo=FALSE, message=FALSE,results=FALSE}
+```
+
+```{r,grid,echo=FALSE, message=FALSE,results=FALSE}
+```
+
+```{r,cv,echo=FALSE, message=FALSE,results=FALSE}
+```
+
+```{r,evaluation1,echo=FALSE, message=FALSE,results=FALSE}
+```
+In our analysis using LASSO model, residual shows funnel shape. If we decide use LASSO as our final model, we should take the logarithm of our outcome.
+Or we can try getting the lambda in Box-Cox transformation. Since LASSO is not our best choice finally, so further step isn't needed.
+```{r,evalasso,echo=FALSE, message=FALSE,results=FALSE}
+```
+
+```{r,evarf,echo=FALSE, message=FALSE,results=FALSE}
+```
+Here is the model comparision table.
+```{r,nullcom,echo=FALSE, message=FALSE}
+```
+So, 95% CI of random forest for random forest looks the best. And we choose random forest model for this data.
+
+```{r,finaleval,echo=FALSE, message=FALSE,results=FALSE}
+```
+
+The performance RMSE=81.3 RSQ=0.462. The predict vs actual plot looks fine. The residual plot looks fine except one outlier.
+
+Base on the importance plot. We can see that 'case rate' plays an important role. Then the following important ones are '14 day cases','antigen_case_hospitalization',etc.
 
 
 {{< pagebreak >}}
+
+
 
 
 # Discussion

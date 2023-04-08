@@ -46,10 +46,13 @@ pa <- summary(lmp)$coefficients[3,4]
 sa <- summary(lmp)$coefficients[3,1]
 popu <- c('popusmall',pa,sa)
 
-prescreen1 <- rbind(prescreen,popu)
+prescreen1 <- as.data.frame(rbind(prescreen,popu))
+
+
+ prescreen1[,2:3] <-  as.numeric(unlist(prescreen1[,2:3]))
+prescreen1[,2:3] <- round(prescreen1[,2:3], digits = 3)
 
 prescreen1
-
 ## ---- anova --------
 #anove test for categorical population
 
