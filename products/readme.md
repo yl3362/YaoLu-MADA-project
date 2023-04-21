@@ -1,14 +1,12 @@
-The folders inside this folder should contain all the products of your project.
+Here is how people reproduce all the steps I did.
 
-For a classical academic project, this will be a peer-reviewed manuscript. 
-The `manuscript` folder contains a template. This template is structured as a report for a class, but you can easily adjust it.
-
-Most manuscripts these days have supplementary material, place those into the `supplement` folder. (You can have the supplement inside the `manuscript` folder or next to it, whatever is better for your setup).
-
-Often, you might make slides for an oral presentation, place those in the `slides` folder. 
-
-If you make a scientific poster, that should go into a `poster` folder. 
-
-You can add further folders. For instance you could have a `website` folder if you plan to write a blog-post or make an interactive shiny-app for your project.  
-
-Often you need a library of references in bibtex format, as well as a CSL style file that determines reference formatting. Since those files might be used by several of the products, I'm placing them in the main products folder. Feel free to re-organize.
+1.Download the vaccination data from 
+https://experience.arcgis.com/experience/3d8eea39f5c1443db1743a4cb8948a9c 
+2. Download the symptom and death data from https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip
+3.Use Georgia_DPH_PUBLIC_Vaccination_Public_Data_in_Excel.xlsx as our major vaccination source.
+4.Use ga_covid_data/county_cases.csv as our major cases source.
+5. Run code/processing_code/processingcode1.R to clean the data.
+6. Run code/analysis_code/exploratory_analysis.R to have initial explore
+7. Run code/model/basicanalysis.R
+8. Run code/model/machinelearning.R
+9. Run products/Manuscriptnew0421.qmd to render docx file.

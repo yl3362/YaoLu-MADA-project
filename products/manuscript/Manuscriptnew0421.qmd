@@ -1,0 +1,292 @@
+---
+title: "Explore of Covid-19 spread speed related factors"
+subtitle: ""
+author: Yao Lu
+date: "`r Sys.Date()`"
+format:
+  docx:
+    toc: false
+    number-sections: true
+    highlight-style: github
+bibliography: ../dataanalysis_template_references.bib
+csl: ../apa.csl
+---
+
+
+
+```{r, echo=FALSE, message=FALSE,warning = FALSE}
+# load a few R packages
+library(here)
+library(knitr)
+```
+
+
+
+# Summary/Abstract
+_Write a summary of your project._
+This paper [@Chenchula2022-lu] discuss the effectiveness of vaccine to Omicron variant.
+
+## Importance 
+Many evidence shows that Covid-19 kill many people and influence people's life quality.
+
+## Objective
+Detect the importance of factors which influence the speed of COVID spread.
+
+## Result
+'Total Case rate' is highly related with '14 day case rate' at 01/31/2023. Second rank one is 'antigen_case_hospitalization'. All vaccine related variables don't have much importance.
+
+## Conclusion
+In the county which has a high case rate. '14 day case rate' will also be high at 01/31/2023. Even in the county with high vaccine coverage, '14 day case rate' may not be at low level at 01/31/2023.
+
+
+{{< pagebreak >}}
+
+
+# Introduction 
+
+## General Background Information
+The main data we use is the vaccination data and the data of the COVID cases in Georgia. Then after we make a summary of the data. We try some models which could guide us to do further study.Our research question is, does the coverage of vaccine decrease the spread of COVID. Under the background of the pandemic, people generate the vaccine to prevent the spread of the COVID. How many effect do the vaccine have? Now, the method we use here is using crude model to briefly test the relationship between coverage of the vaccine and incerasing speed of the COVID. 
+
+## Description of data and data source
+Firstly, we load data and see if there is the need of clean and transformation.All data wrangling process are recorded in code/processing_code. Covid vaccination data comes from
+https://experience.arcgis.com/experience/3d8eea39f5c1443db1743a4cb8948a9c.
+Covid symptom and death data comes from https://ga-covid19.ondemand.sas.com/docs/ga_covid_data.zip.All the raw data are saved at raw_data.
+
+
+## Questions/Hypotheses to be addressed
+
+Which factors influence the speed of COVID spread? We expect speed of COVID spread should be related with vaccine coverage.
+
+# Methods 
+
+## Data import and clean dictionary
+We combine these two sources by county. We have 159 counties information as our observation. Then we select part of the variables from the source. **County_name**, cases(PCR confirmed cases + antigen positive cases), **population** (County population based on 2020 Georgia Population Estimates: https://opb.georgia.gov/census-data/population-projections), **confirmed_case_hospitalization** (Confirmed COVID-19 cases that were hospitalized at the time the case was reported to DPH or when the case was interviewed),**deaths**(Confirmed COVID-19 cases that were either reported to DPH as deceased by healthcare providers or medical examiners/coroners, identified by death certificates with COVID-19 indicated as the cause of death, or there is evidence that COVID-19 contributed to the individual’s death),**case rate**(Cases/100,000 population),**death rate**(Deaths/100,000 population),**14 day case rate**(Cases reported in the previous 14 days/100,000 population),**14 day cases**(Cases reported in the previous 14 days),**antigen_cases**(Antigen cases include individuals with a positive antigen test. Only antigen test results are used in identifying these cases. These test results are reported through multiple sources including electronic lab reporting (ELR), State Electronic Notifiable Disease Surveillance System (SendSS), faxed case reports and calls from providers to DPH),**probable_deaths**(Probable deaths include: individuals who were antigen positive or had compatible illness and known close contact to a case, and either they were reported to DPH as deceased by healthcare providers or medical examiners/coroners, they were identified by death certificates with COVID-19 indicated as the cause of death, or there is evidence that COVID contributed to their deaths; and individuals with a death certificate that has COVID-19 indicated as the cause of death and there is no laboratory evidence for SARS-CoV-2”),**antigen_case_hospitalization**(Antigen positive COVID-19 cases that were hospitalized at the time the case was reported to DPH or when the case was interviewed),**newid**(county ID),**VAXADMIN**(Number of vaccines administered (may include non-Georgia residents and persons with unknown residence)),**RTCUMVAXADMIN**(Vaccine administration rate: vaccines administered per 100,000 population (may include non-Georgia residents and persons with unknown residence)),**PERSONVAX**(Number of residents with at least one vaccine (does not include non-Georgia residents and persons with unknown residence)),**PCTCUMPVAX**(Percent of residents with at least one vaccination (does not include non-Georgia residents and persons with unknown residence)),**PERSONCVAX**(Number of residents that are fully vaccinated (does not include non-Georgia residents and persons with unknown residence)),**PCTCUMPCVAX**(Percent of residents that are fully vaccinated (does not include non-Georgia residents and persons with unknown residence)),**PERSONBVAX**(Number of residents that that have additional dose after fully vaccinated (does not include non-Georgia residents and persons with unknown residence)),**PCTBOOSTER**(Percent of residents that have additional dose after fully vaccinated (does not include non-Georgia residents and persons with unknown residence))
+
+
+## Statistical analysis
+
+'14 day case rate' is the major outcome for my analysis.
+I fitted a basic linear model '14 day case rate'~percentage of booster+population of county. Here I categorize population to high,medium,low. The I did a pre-screen to all the variables base on p-value. I used machine learning engine to build four models which are null, tree,lasso,random forest. The compare all these model performance base on RMSE.
+
+
+
+{{< pagebreak >}}
+
+
+# Results
+
+## Exploratory/Descriptive analysis
+
+
+
+
+
+
+### Data exploration through tables
+
+@tbl-resulttable1 is the brief view of '14 day case rate' and the vaccine related variables. We can see that it's about half people have at least one vaccine. And about 20% people have a booster.
+```{r}
+#| label: tbl-resulttable1
+#| tbl-cap: "Brief view of outcome and vaccine related variables"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "1_summarytable.rds"))
+knitr::kable(resulttable1)
+```
+
+### Data exploration through figures
+
+@fig-result1 shows the detail of 14 day case rate distribution. It is almost normally distributed except two outliers. Then I check which county they are. They are ‘Quitman’ and ‘Stewart’ counties. In the previous 14 days/100,000 population, Quitman has 392.33 cases reported, and Stewart has 1125.8 cases reported. Beyond our current research, we should pay attention about what situations make these two counties have such a high level than other counties. Previous 14 days before 01/31/2023.
+
+```{r}
+#| label: fig-result1
+#| fig-cap: "14 day case rate distribution"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","2_14_day_case_rate.png"))
+```
+Now population, RTCUMVAXADMIN,PCTCUMPVAX,PCTCUMPCVAX and PCTBOOSTER. Since last four should be highly correlated. The analysis we will apply later should be similar. Our exploratory model will include two predictors which are population and one of these four.
+
+Since the four choices share same statistics steps. We just pick population+PCTBOOSTER as example. I want to explore if population have linear influence or curve influence. So, I add a new population variable as ‘small’,‘medium’ and ‘large’. I think we can try both way how we define population. 
+
+```{r}
+#| label: fig-result2
+#| fig-cap: "Percentage of booster distribution"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","1_PCTBOOSTER_distribution.png"))
+```
+
+@fig-result2 is the percentage of booster distribution. Though the mean is about 20 percent, the peaks located at about 15 percent and 25 percent.
+
+```{r}
+#| label: fig-result3
+#| fig-cap: "Percentage of booster distribution"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","3_case_BOOSTER_stratified.png"))
+```
+
+@fig-result3 are two figures which show the trend between percentage of booster and 14 day case rate. With and without population stratification respectively. We can see that without stratification, the trend is not clear to say. With stratification, in high and medium population county, 14 day case rate increase as the percentage of booster increase. In small population county, 14 day case rate decrease as the percentage of booster increase. Here we can see both the two outliers have small population.
+
+## Basic statistical analysis
+
+@tbl-resulttable2 is the basic linear regression with percentage of booster and categorical population. It shows that none of these variables are significant.
+
+```{r}
+#| label: tbl-resulttable2
+#| tbl-cap: "Linear regression coefficient Booster and categorical population"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "2_bo_po1.rds"))
+knitr::kable(resulttable1)
+```
+
+@tbl-resulttable3 is the basic linear regression with percentage of booster and numeric population.It shows that none of these variables are significant.
+
+```{r}
+#| label: tbl-resulttable3
+#| tbl-cap: "Linear regression coefficient Booster and numeric population"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "3_bo_po.rds"))
+knitr::kable(resulttable1)
+```
+
+@tbl-resulttable4 is the basic linear regression with percentage of fully vaccine and categorical population.It shows that none of these variables are significant.
+
+```{r}
+#| label: tbl-resulttable4
+#| tbl-cap: "Linear regression coefficient fully vaccine and categorical population"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "4_fu_po.rds"))
+knitr::kable(resulttable1)
+```
+
+
+Since all these three analysis shows large p values. So, I decide to seek another variables which can account for our outcome rather than vaccine related variables. We would like to do linear regression with one predictor each time to explore the most significant ones. Since we haven’t find any significant even with the most possible significants ones.(fully vaccine and booster) So, we should expect we will have many diffculties. Here I will explore all variable in our data sets. 
+
+@tbl-resulttable5 shows all the one to one regression results. From one to one regression, only ‘case rate’ have a significant p-value. And all vaccine relevant predictors are irrelevant to “14 day case rate”. From here, I will adjust my predictors from vaccine-related to “case rate”. And population1 is a categorical variable, so the single p-value is not enough to decide if should include it or not. So, we do anova F-test manually.
+
+```{r}
+#| label: tbl-resulttable5
+#| tbl-cap: "Prescreen table"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "5_prescreen.rds"))
+knitr::kable(resulttable1)
+```
+
+@tbl-resulttable6 shows in ANOVA table, categorical population is not significant. We should have removed it, but let's keep it here to see if situation will change in future.
+
+```{r}
+#| label: tbl-resulttable6
+#| tbl-cap: "Prescreen table"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "6_anova_po.rds"))
+knitr::kable(resulttable1)
+```
+
+Surprisingly, @tbl-resulttable7 shows that when we adjusted ‘case rate’ in our model, categorical population shows a little bit significance. 
+
+```{r}
+#| label: tbl-resulttable7
+#| tbl-cap: "Prescreen table"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "7_cr_po.rds"))
+knitr::kable(resulttable1)
+```
+
+
+
+## Full analysis(machine learning method)
+
+Here we apply machine learning method to our entire data.We use 5-fold cross-validation, 5 times repeated. We use 4 different models which are null, tree, lasso and random forest. We separate our data for train(70%) and test(30%) strata by ‘14 day case rate’ which is our major interest outcome. Then we check the performance of each model. @tbl-resulttable8 is the final performance table. Here we think random forest model is the best model. Since comparing with null or tree model. They have close std_err, but mean is lower than those. Comparing with lasso model, though lasso have less std_err, their 95%CI is not overlapped. So, we only display the statistical result for random forest model only. Other model's will be hided in **products/manuscript/machinelearning.R**.
+
+```{r}
+#| label: tbl-resulttable8
+#| tbl-cap: "Prescreen table"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "8_model_comp.rds"))
+knitr::kable(resulttable1)
+```
+
+@fig-result4 Top 2 are the real plot. And the bottom 2 are zoomed up ones. Looks like this model is acceptable. The prediction is good.
+
+```{r}
+#| label: fig-result4
+#| fig-cap: "Actual vs predict value in random forest model"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","4_rf_pre_act.png"))
+```
+
+@fig-result5 Left is the real plot. And right one is zoomed up. Looks like fine except two outliers.
+
+```{r}
+#| label: fig-result5
+#| fig-cap: "Residual plot in random forest model"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","5_rf_residual.png"))
+```
+
+@tbl-resulttable9 is the performance table of random forest model.
+
+```{r}
+#| label: tbl-resulttable9
+#| tbl-cap: "Prescreen table"
+#| echo: FALSE
+resulttable1 = readRDS(here("results","rds", "9_rf_perf.rds"))
+knitr::kable(resulttable1)
+```
+
+@fig-result6 is the importance plot. Here we can find case_rate is the most important factor. Second important one is antigen_case_hospitalization. Third is 14 day cases which we should be careful. Since our outcome is 14 day cases devided by population with appropriate units.
+```{r}
+#| label: fig-result6
+#| fig-cap: "Importance plot"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","6_rf_variable.png"))
+```
+
+@fig-result7 is predict and actual value in cross-validation plot. Looks like the prediction is fine.
+
+```{r}
+#| label: fig-result7
+#| fig-cap: "Predict and actual value in cross-validation"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","7_rf_final_pre_act.png"))
+```
+
+In @fig-result8, left is the real plot. Right is zoomed up. Looks like the residual is fine except few outliers.
+```{r}
+#| label: fig-result8
+#| fig-cap: "Residual plot in cross-validation"
+#| echo: FALSE
+knitr::include_graphics(here("results","plot","8_rf_final_residual.png"))
+```
+
+
+{{< pagebreak >}}
+
+
+
+
+# Discussion
+
+## Summary and Interpretation
+### Basic analysis
+Here is our initial interpretation from basic linear analysis. Vaccine coverage is not related with speed of COVID confirmed cases in 14 days. Since not all people who get infected will have test, there is bias. Here are the possible guess I made. Worst one, vaccine cannot prevent COVID. Neutral one, vaccine can smooth the symptom, but cannot reduce infection. Optimistic one, vaccine can smooth the symptom, but virus shows immune escape. The county who had experienced a high rate infection still keep a high ‘14 day case rate’, because the type of virus in that county escape the vaccine protection.
+As the ‘case rate’ increase one unit, the ‘14 day case rate’ will increase 0.008894 unit. That is, if cumulative number of cases per 100,000 population increase one. Cases reported in the previous 14 days per 100,000 population will increase 0.008894. (t-value=7.836,p-value<0.001).
+And the county with less population have higher ‘14 day case rate’. The initial guess is that, for the county with high population, people have already had herd immunity at the early stage of COVID. So, in 01/31/2023, the county with less population have higher ‘14 day case rate’.
+
+### Machine learning
+In the random forest model. We can find case_rate is the most important factor. Second important one is antigen_case_hospitalization. Third is 14 day cases which we should be careful. Since our outcome is 14 day cases devided by population with appropriate units. All the statistical plot looks fine in random forest model. But there are still some outliers. So, there may exist some important factor which we miss. Such as if people get together in those county close before 01/31/2023.
+
+## Strengths and Limitations
+The strength of this analysis, the model prediction is fine to predict the '14 day case rate'. And checking plots are OK as well.
+Limitation is that we still not discover the mechanism of COVID spread. Many references show evidence that vaccine can protect people. Vaccine can smooth the symptoms. Maybe RNA virus are so unstable. They get variation so quick to hide itself from vaccine.
+
+
+## Conclusions
+As this model shows, total case rate is related with 14 day case rate. One hypothesis is the virus get vary to escape the vaccine protection. So, if there is a spread-powerful virus appear in those counties, the speed of spread will keep high in those counties. And this data also shows that, vaccine coverage related variables don't have much importance to the speed of spread.
+
+
+
+{{< pagebreak >}}
+
+# References
+
+
+

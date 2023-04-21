@@ -15,7 +15,7 @@ library(stringr)
 #load data here
 data_location <- here::here("data","raw_data","Georgia_DPH_PUBLIC_Vaccination_Public_Data_in_Excel.xlsx")
 vacin <- readxl::read_excel(data_location,sheet='COUNTY_SUMMARY')
-data_location1 <- here::here("data","raw_data",'ga_covid_data',"county_cases.csv")
+data_location1 <- here::here("data","raw_data","ga_covid_data","county_cases.csv")
 cases <- read_csv(data_location1)
 
 ## ----exploredata --------
