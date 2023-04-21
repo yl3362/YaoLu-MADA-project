@@ -23,8 +23,8 @@ library(knitr)
 
 
 # Summary/Abstract
-_Write a summary of your project._
-This paper [@Chenchula2022-lu] discuss the effectiveness of vaccine to Omicron variant.
+This paper [@Chenchula2022-lu] discuss the effectiveness of vaccine to Omicron variant. This paper [@pmid33024307] introduce the characteristics of COVID-19.[@pmid34525277],[@pmid35297591],[@pmid33306990]
+and [@pmid33125914] discussed the efficacy of covid vaccine.
 
 ## Importance 
 Many evidence shows that Covid-19 kill many people and influence people's life quality.
