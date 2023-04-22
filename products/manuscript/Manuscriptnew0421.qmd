@@ -174,7 +174,7 @@ knitr::kable(resulttable1)
 
 ```{r}
 #| label: tbl-resulttable6
-#| tbl-cap: "Prescreen table"
+#| tbl-cap: "Anova table"
 #| echo: FALSE
 resulttable1 = readRDS(here("results","rds", "6_anova_po.rds"))
 knitr::kable(resulttable1)
@@ -184,7 +184,7 @@ Surprisingly, @tbl-resulttable7 shows that when we adjusted ‘case rate’ in o
 
 ```{r}
 #| label: tbl-resulttable7
-#| tbl-cap: "Prescreen table"
+#| tbl-cap: "Anova table"
 #| echo: FALSE
 resulttable1 = readRDS(here("results","rds", "7_cr_po.rds"))
 knitr::kable(resulttable1)
@@ -198,7 +198,7 @@ Here we apply machine learning method to our entire data.We use 5-fold cross-val
 
 ```{r}
 #| label: tbl-resulttable8
-#| tbl-cap: "Prescreen table"
+#| tbl-cap: "Model comparision table"
 #| echo: FALSE
 resulttable1 = readRDS(here("results","rds", "8_model_comp.rds"))
 knitr::kable(resulttable1)
@@ -226,7 +226,7 @@ knitr::include_graphics(here("results","plot","5_rf_residual.png"))
 
 ```{r}
 #| label: tbl-resulttable9
-#| tbl-cap: "Prescreen table"
+#| tbl-cap: "Random forest model performance table"
 #| echo: FALSE
 resulttable1 = readRDS(here("results","rds", "9_rf_perf.rds"))
 knitr::kable(resulttable1)
