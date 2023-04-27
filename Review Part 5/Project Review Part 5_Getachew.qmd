@@ -1,0 +1,178 @@
+---
+title: Project Review 
+author: Betelihem Getachew
+date: "`r file.mtime(knitr::current_input())`"
+format: 
+  html:
+    toc: true
+    toc-depth: 3
+    number-sections: true
+---
+
+\# Overview
+
+**Title of project: Explore of Covid-19 Spread Speed Related Factors**
+
+**Name of project author(s):Yao Lu**
+
+**Name of project reviewer: Betelihem Getachew**
+
+####     \## Background, Context and Motivation
+
+How well is the context of the project described? Is a comprehensive background, including summary of previous/related work given? Is the project well placed into the context of existing work (including proper referencing of existing work). Is it clear why the project was undertaken and what new information it hopes to provide?
+
+\### Feedback and Comments
+
+ - I would suggest you make the abstract more informational than it currently it. what you have listed are three papers that perhaps were the motivation for this analysis but no other informaiton is provided about the current manuscript. One or two sentences each covering introduction, methods, results, conclusion and implication would be great.
+
+\### Summary assessment (PICK ONE, DELETE THE OTHERS)
+
+\* some contextualization and motivation
+
+####     \## Question description
+
+How well and clear are the question(s)/hypotheses the project aims to address described? Is it clear how the questions relate to the data?
+
+\### Feedback and Comments
+
+ - I would align the objective and hypothesis mentioned, they seem slightly disjointed as your research question is whether coverage of vaccines decreases the spread of COVID while your objective is looking at all factors that influence covid spread. I would also explain the outcome variable clearly. For instance, I am assuming you are using 14-day case rate as a proxy measure for covid spread?
+
+Your readers who are not subject matter experts of your topic will appreciate the clarity you add by defining and explaining unfamiliar terms.
+
+\### Summary assessment
+
+\* question/hypotheses somewhat explained
+
+####     \## Data description
+
+How well is the data overall described? Is the source provided? Is a codebook or other meta-information available that makes it clear what the data is?
+
+\### Feedback and Comments
+
+ - I would suggest that you describe the data a bit more, how was the data collected, the sampling method used, who collected the data and why was it collected since you are doing a secondary data analysis etc.,.
+
+ - For the data dictionary I would suggest a two-column table (variable and description). The current format it is in right now can be a bit overwhelming to read.
+
+ - You have provided the code book and the data source.
+
+\### Summary assessment
+
+\* source and overall structure of data somewhat explained
+
+####     \## Data wrangling and exploratory analysis
+
+How well is the data cleaned/processed and explored? Are all steps reasonable and well explained? Are alternatives discussed and considered? Are meaningful exploratory results shown (e.g. in the supplementary materials)?
+
+\### Feedback and Comments
+
+ - I think basic demographics is missing. There is a disparity in covid spread by race/ethniciy, by age, by gender etc., and without knowing the demographics of the sample you are analyzing, intrepreting the results correctly will be difficult.
+
+ - I like how you stratified the population which allowed you to see a trend.
+
+ - It would be great if you can explain on what basis you stratified and categorized population which was a continuous variable into a small, medium, and high population catagories.
+
+\### Summary assessment
+
+\* some weaknesses in wrangling and exploratory component
+
+####     \## Appropriateness of Analysis
+
+Were the analysis methods appropriate for the data? Was the analysis done properly? Were different components of the analysis (e.g. performance measure, variable selection, data pre-processing, model evaluation) done in the best way possible and explained well?
+
+\### Feedback and Comments
+
+ - I think your analysis and model performance selection process is clear.
+
+\### Summary assessment
+
+\* strong and reasonable analysis
+
+####     \## Presentation
+
+How well are results presented? Are tables and figures easy to read and understand? Are the main figures/tables publication level quality?
+
+\### Feedback and Comments
+
+I think the tables and figures are clearly presented and properly labelled.
+
+\### Summary assessment
+
+\* results are very well presented
+
+####     \## Discussion/Conclusions
+
+Are the study findings properly discussed? Are strengths and limitations acknowledged? Are findings interpreted properly?
+
+\### Feedback and Comments
+
+ - In this section you discuss your findings well. I would also suggest, rather than discussing the strengths/limitations of the analysis method used, you focus in the context of the overall analysis.
+
+\### Summary assessment
+
+\* minor parts wrong, missing or unclear
+
+\## Further comments
+
+\_Add any other comments regarding the different aspects of the project here. Write anything you think can help your classmate improve their project.\_
+
+ - I think in general the paper is great! There is some inconsistancy with either the wordings or the thought process behind it. I would reread it and make editorial changes to make the reading smoother and more coherent. Even if your paper is great, if the flow isnt smooth your reader might find it hard to undertand the analysis.
+
+\# Overall project content evaluation
+
+Evaluate overall features of the project by filling in the sections below.
+
+####     \## Structure
+
+Is the project well structured? Are files in well labeled folders? Do files have reasonable names? Are all "junk" files not needed for analysis/reproduction removed? By just looking at files and folders, can you get an idea of how things fit together?
+
+\### Feedback and Comments
+
+I think your folders and files are well organized. Your readme files are updated. I think when naming your results (tables or figures) it would be great if they could match what you have in your transcript. Not a necessitiy but a recommendation.
+
+\### Summary assessment
+
+\* well structured
+
+####     \## Documentation 
+
+How well is the project documented? Are you able to understand each step of the whole analysis, each decision that was made, and each line of code? Is enough information provided as comments in code or as part of Rmd files?
+
+\### Feedback and Comments
+
+I think the codes are well advanced and documented well. Overall, you could do a little more description over each code line to indicate why you are running a certain code. That would be helfpul for the reader who may not be familiar with that line of code.
+
+\### Summary assessment
+
+\* decently documented with some gaps
+
+\## Reproducibility
+
+Are all results fully reproducible? Is documentation provided which clearly explains how to reproduce things, and does it work without the need for any manual intervention? Are you able to re-run the whole analysis without having to do manual interventions/edits?
+
+\### Feedback and Comments
+
+I found your results to be reproducable. I did not have to edit any codes in order to be able to run the whole analysis.
+
+\### Summary assessment
+
+\* fully reproducible without issues
+
+####     \## Thoroughness
+
+How thorough was the overall study? Were alternatives (e.g. different ways of processing the data or different models) considered? Were alternatives discussed? Were the questions/hypotheses fully and thoroughly addressed?
+
+\### Feedback and Comments
+
+I think the hypotheses was addressed. The model selection process was somewhat clear. I am not clear of the variable selection process you did based on p-values. I dont recall learning in this class.
+
+\### Summary assessment
+
+\* decent level of thoroughness
+
+####     \## Further comments
+
+\_Add any other comments regarding the overall project here. Write anything you think can help your classmate improve their project.\_
+
+ - Great job with this analysis as it does have serveral moving parts. I hope my feedback is helpful.
+
+Thanks!
