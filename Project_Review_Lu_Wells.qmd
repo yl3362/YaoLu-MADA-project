@@ -1,0 +1,155 @@
+# Overview
+
+Title of project: "Explore of COVID-19 speed related factors"
+
+Name of project author(s): Yao Lu
+
+Name of project reviewer: Katie Wells
+
+
+
+# Specific project content evaluation
+
+
+## Background, Context and Motivation
+
+
+### Feedback and Comments
+While there are some cited papers, there is not a clear background with context and motivation. There is a clear statement of motivation that I think could be developed better with some excerpts from the cited papers.  
+
+
+### Summary assessment 
+* some contextualization and motivation
+
+
+
+## Question description
+How well and clear are the question(s)/hypotheses the project aims to address described? Is it clear how the questions relate to the data?
+
+
+### Feedback and Comments
+The question is clearly stated and related to the data. The data seems appropriate for the exploration and analyses you want to perform. 
+
+### Summary assessment
+* question/hypotheses fully clear
+
+
+## Data description
+
+
+### Feedback and Comments
+The data is well described and the source is provided (though not cited corrected), but the codebook is within the text of the manuscript and is rather lengthy. I think it would be better in a separate file or readme. 
+
+
+### Summary assessment
+* source and overall structure of data well explained
+
+
+## Data wrangling and exploratory analysis
+
+
+### Feedback and Comments
+The data is thoroughly cleaned and explored. There is not much documentation for each step so it can be a little difficult to follow and understand why each step is being performed. There are also 2 exploration files, one which runs and one that has more comments but does not produce any code. It is a little confusing as it seems there was an attempt at r files being pulled into qmd but I could not get them to work. 
+
+### Summary assessment
+* some weaknesses in wrangling and exploratory component
+
+
+
+
+## Appropriateness of Analysis
+
+
+### Feedback and Comments
+Both the statisitcal analysis and the machine learning are very thorough and well-presented. Many linear models and machine learning models were attempted to discover the most influential factor in COVID-19 spread. There could be more documentation in the files explaining each step but otherwise very good. 
+
+
+### Summary assessment
+* strong and reasonable analysis
+
+## Presentation
+
+
+### Feedback and Comments
+The tables and figures presented in the manuscript are very nice-looking and professional. They are easy to understand, though some of them could have their dimensions tweaked so they could be easier to view in the manuscript. I think the number of figures in the manuscript could be reduced if you could pick some that you deemd most important and put the others in a supplement. 
+
+
+### Summary assessment
+* results are very well presented
+
+
+
+## Discussion/Conclusions
+
+
+### Feedback and Comments
+THe discussion and conclusions are in line with what I observed when I ran the project myself. They make sense and are in line with the analyses performed. I think the claims made about what may be happening that is not observed in this project would be better backed up by elaboration of the sources cited in the introduction. 
+
+
+### Summary assessment
+* strong, complete and clear discussion
+
+
+## Further comments
+
+
+
+# Overall project content evaluation
+
+
+
+## Structure
+
+
+### Feedback and Comments
+It was mainly easy to follow the steps of the project given the readme file, but I was a little puzzled with the r scripts and qmd files. I think you meant for them to be used in conjunction but I think the qmd files were not set up correctly as they did not run. It did not hinder the running of the project but it did clutter the files. Otherwise the repository was well organized. 
+
+
+### Summary assessment
+* mostly clear, but some confusing parts (e.g. useless files, things in the wrong folders)
+
+
+
+## Documentation 
+
+
+### Feedback and Comments
+There is some documentation but I think the analysis and machine learning could use some more to explain the steps as they are the more difficult subjects. There is some explanation in the qmd files but it is disjointed since they don't connect. 
+
+
+### Summary assessment
+* decently documented with some gaps
+
+
+
+## Reproducibility
+
+
+### Feedback and Comments
+I was able to get everything to run and produce results without manual interventions or edits. However, if the r files were able to work with the qmd files it would make it easier to picture the final product throughout the process before rendering the manuscript. 
+
+
+
+### Summary assessment
+* fully reproducible without issues
+
+
+## Thoroughness
+
+
+### Feedback and Comments
+This project did a lot of exploration and investigation with linear and machine learning models; the machine learning portion gave several alternatives and chose the best model based on the results. The question was addressed though the results did not quite support the expected outcome. 
+
+
+### Summary assessment
+* strong level of thoroughness
+
+
+## Further comments
+
+Overall this project is very well thought out. It has some very good points and lots of coding work went into its completion. The manuscript is a little jumbled and needs some reorganization. The summary/abstract should be a short paragraph that gives an overall description of your project. The introduction should include descriptions of previous work with the sources you cited and then a description of the data and how you got it. The codebook is very helpful in understanding what the variables are but I think it could be stored in a separate file. The methods could also include a short description of the steps you took to clean, explore, and analyze your data. There are also some instances using "we" in the manuscript where you should use "I". 
+
+
+
+
+
